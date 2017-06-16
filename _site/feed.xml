@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>迷途知返</title>
+    <description></description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 16 Jun 2017 16:56:40 +0800</pubDate>
+    <lastBuildDate>Fri, 16 Jun 2017 16:56:40 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>安装jekyll (include rvm,ruby,gem)</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;我前面有一篇文章可以&lt;a href=&quot;/2015/03/02/build-a-githubblog-in-21minutes/&quot;&gt;21分钟搭建一个GitHub Blog&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这里我们深入到jekyll层面看看,如何在本地也生成一个blog,也就是在本地干和github上一样的事情&lt;/p&gt;
+
+&lt;p&gt;这里涉及到rvm,ruby,gem和jekyll的安装,绝对干货,因为里面已经包含了几个我踩的坑&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;概要&quot;&gt;概要&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#前言&quot; id=&quot;markdown-toc-前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#概要&quot; id=&quot;markdown-toc-概要&quot;&gt;概要&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#系统环境&quot; id=&quot;markdown-toc-系统环境&quot;&gt;系统环境&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#安装过程&quot; id=&quot;markdown-toc-安装过程&quot;&gt;安装过程&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#1安装gcc&quot; id=&quot;markdown-toc-1安装gcc&quot;&gt;1.安装gcc&lt;/a&gt;            &lt;ul&gt;
+              &lt;li&gt;&lt;a href=&quot;#1号坑&quot; id=&quot;markdown-toc-1号坑&quot;&gt;1号坑&lt;/a&gt;                &lt;ul&gt;
+                  &lt;li&gt;&lt;a href=&quot;#安装ruby&quot; id=&quot;markdown-toc-安装ruby&quot;&gt;安装ruby&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;#安装rubygems&quot; id=&quot;markdown-toc-安装rubygems&quot;&gt;安装rubygems&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;#安装jekyll&quot; id=&quot;markdown-toc-安装jekyll&quot;&gt;安装jekyll&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#2安装rvm&quot; id=&quot;markdown-toc-2安装rvm&quot;&gt;2.安装rvm&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#3安装ruby&quot; id=&quot;markdown-toc-3安装ruby&quot;&gt;3.安装ruby&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#4安装jekyll&quot; id=&quot;markdown-toc-4安装jekyll&quot;&gt;4.安装jekyll&lt;/a&gt;            &lt;ul&gt;
+              &lt;li&gt;&lt;a href=&quot;#2号坑&quot; id=&quot;markdown-toc-2号坑&quot;&gt;2号坑&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#5安装nodejs&quot; id=&quot;markdown-toc-5安装nodejs&quot;&gt;5.安装nodejs&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#6生成blog&quot; id=&quot;markdown-toc-6生成blog&quot;&gt;6.生成blog&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#7运行jekyll-server&quot; id=&quot;markdown-toc-7运行jekyll-server&quot;&gt;7.运行jekyll server&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#总结&quot; id=&quot;markdown-toc-总结&quot;&gt;总结&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#命令汇总&quot; id=&quot;markdown-toc-命令汇总&quot;&gt;命令汇总&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#注意&quot; id=&quot;markdown-toc-注意&quot;&gt;注意&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;系统环境&quot;&gt;系统环境&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# lsb_release  -a 
+LSB Version:	:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch:graphics-4.0-amd64:graphics-4.0-noarch:printing-4.0-amd64:printing-4.0-noarch
+Distributor ID:	CentOS
+Description:	CentOS release 6.6 (Final)
+Release:	6.6
+Codename:	Final
+[root@Test ~]# cat /etc/issue
+CentOS release 6.6 (Final)
+Kernel \r on an \m
+
+[root@Test ~]# uname -a 
+Linux Test 2.6.32-504.el6.x86_64 #1 SMP Wed Oct 15 04:27:16 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux
+[root@Test ~]# 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;安装过程&quot;&gt;安装过程&lt;/h2&gt;
+
+&lt;h3 id=&quot;1安装gcc&quot;&gt;1.安装gcc&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# yum -y install gcc
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Setting up Install Process
+Loading mirror speeds from cached hostfile
+ * base: ftp.sjtu.edu.cn
+ * epel: ftp.sjtu.edu.cn
+ * extras: ftp.sjtu.edu.cn
+ * updates: mirrors.skyshe.cn
+Resolving Dependencies
+--&amp;gt; Running transaction check
+---&amp;gt; Package gcc.x86_64 0:4.4.7-11.el6 will be installed
+--&amp;gt; Processing Dependency: cpp = 4.4.7-11.el6 for package: gcc-4.4.7-11.el6.x86_64
+--&amp;gt; Processing Dependency: cloog-ppl &amp;gt;= 0.15 for package: gcc-4.4.7-11.el6.x86_64
+--&amp;gt; Running transaction check
+---&amp;gt; Package cloog-ppl.x86_64 0:0.15.7-1.2.el6 will be installed
+--&amp;gt; Processing Dependency: libppl_c.so.2()(64bit) for package: cloog-ppl-0.15.7-1.2.el6.x86_64
+--&amp;gt; Processing Dependency: libppl.so.7()(64bit) for package: cloog-ppl-0.15.7-1.2.el6.x86_64
+---&amp;gt; Package cpp.x86_64 0:4.4.7-11.el6 will be installed
+--&amp;gt; Processing Dependency: libmpfr.so.1()(64bit) for package: cpp-4.4.7-11.el6.x86_64
+--&amp;gt; Running transaction check
+---&amp;gt; Package mpfr.x86_64 0:2.4.1-6.el6 will be installed
+---&amp;gt; Package ppl.x86_64 0:0.10.2-11.el6 will be installed
+--&amp;gt; Finished Dependency Resolution
+
+Dependencies Resolved
+
+==========================================================================================================
+ Package                  Arch                  Version                         Repository           Size
+==========================================================================================================
+Installing:
+ gcc                      x86_64                4.4.7-11.el6                    base                 10 M
+Installing for dependencies:
+ cloog-ppl                x86_64                0.15.7-1.2.el6                  base                 93 k
+ cpp                      x86_64                4.4.7-11.el6                    base                3.7 M
+ mpfr                     x86_64                2.4.1-6.el6                     base                157 k
+ ppl                      x86_64                0.10.2-11.el6                   base                1.3 M
+
+Transaction Summary
+==========================================================================================================
+Install       5 Package(s)
+...
+...
+  Verifying  : ppl-0.10.2-11.el6.x86_64                                                               1/5 
+
+  Verifying  : cpp-4.4.7-11.el6.x86_64                                                                2/5 
+
+  Verifying  : gcc-4.4.7-11.el6.x86_64                                                                3/5 
+
+  Verifying  : cloog-ppl-0.15.7-1.2.el6.x86_64                                                        4/5 
+
+  Verifying  : mpfr-2.4.1-6.el6.x86_64                                                                5/5 
+
+Installed:
+  gcc.x86_64 0:4.4.7-11.el6                                                                               
+
+Dependency Installed:
+  cloog-ppl.x86_64 0:0.15.7-1.2.el6       cpp.x86_64 0:4.4.7-11.el6       mpfr.x86_64 0:2.4.1-6.el6      
+  ppl.x86_64 0:0.10.2-11.el6             
+
+Complete!
+[root@Test ~]# 
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;1号坑&quot;&gt;1号坑&lt;/h4&gt;
+
+&lt;h5 id=&quot;安装ruby&quot;&gt;安装ruby&lt;/h5&gt;
+
+&lt;p&gt;(用于展示坑的大小,不要跟着操作,因为这是白操作)&lt;/p&gt;
+
+&lt;p&gt;系统默认安装好了ruby&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# yum list ruby
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Loading mirror speeds from cached hostfile
+ * base: ftp.sjtu.edu.cn
+ * epel: ftp.sjtu.edu.cn
+ * extras: ftp.sjtu.edu.cn
+ * updates: mirrors.skyshe.cn
+Installed Packages
+ruby.x86_64                                   1.8.7.374-4.el6_6                                   @updates
+[root@Test ~]# ruby -v 
+ruby 1.8.7 (2013-06-27 patchlevel 374) [x86_64-linux]
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;安装rubygems&quot;&gt;安装rubygems&lt;/h5&gt;
+
+&lt;p&gt;其中的这些包都是根据错误提示一个个加上去的，这个过程就略过了，至于为什么要安装gem呢，是网上的很多声称实践过的先驱们探索出来的,方便用来安装jekyll用的&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# yum -y install rubygems ruby-devel rubygems-devel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;安装jekyll&quot;&gt;安装jekyll&lt;/h5&gt;
+
+&lt;p&gt;(坑来了，坑来了)&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# gem install jekyll  
+ERROR:  Error installing jekyll:
+	redcarpet requires Ruby version &amp;gt;= 1.9.2.
+[root@Test ~]# ruby  -v 
+ruby 1.8.7 (2013-06-27 patchlevel 374) [x86_64-linux]
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;按说也就是一个版本问题，升级不得了呗，结果这个系统最高的也就是1.8.7，于是从官网下载源码2.2.1和1.9.3进行尝试，卸载掉ruby，用源码安装成功&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# ruby  -v 
+ruby 1.9.3p545 (2014-02-24 revision 45159) [x86_64-linux]
+[root@Test ~]# 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可这个不是问题的关键，关键是由于此系统中的gem依赖1.8.7，结果一安装又把ruby覆盖掉了回到了1.8.7,解决办法是源码编译高版本的gem…当然也不知道到时候又有什么别的依赖….太浪费时间了&lt;/p&gt;
+
+&lt;p&gt;干脆放弃了这个方法&lt;/p&gt;
+
+&lt;h3 id=&quot;2安装rvm&quot;&gt;2.安装rvm&lt;/h3&gt;
+
+&lt;p&gt;有了rvm，妈妈再也不担心我的ruby版本了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# curl -L get.rvm.io | bash -s stable 
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+184   184  184   184    0     0    323      0 --:--:-- --:--:-- --:--:--   654
+184   184  184   184    0     0    323      0 --:--:-- --:--:-- --:--:--   652
+  0   184    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+100 22817  100 22817    0     0  10969      0  0:00:02  0:00:02 --:--:-- 52452
+Downloading https://github.com/wayneeseguin/rvm/archive/1.26.10.tar.gz
+Downloading https://github.com/wayneeseguin/rvm/releases/download/1.26.10/1.26.10.tar.gz.asc
+gpg: Signature made Tue 03 Feb 2015 12:09:00 AM CST using RSA key ID BF04FF17
+gpg: Can't check signature: No public key
+Warning, RVM 1.26.0 introduces signed releases and automated check of signatures when GPG software found.
+Assuming you trust Michal Papis import the mpapis public key (downloading the signatures).
+
+GPG signature verification failed for '/usr/local/rvm/archives/rvm-1.26.10.tgz' - 'https://github.com/wayneeseguin/rvm/releases/download/1.26.10/1.26.10.tar.gz.asc'!
+try downloading the signatures:
+
+    gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+
+or if it fails:
+
+    command curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+
+the key can be compared with:
+
+    https://rvm.io/mpapis.asc
+    https://keybase.io/mpapis
+
+[root@Test ~]# echo $?
+2
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;GPG signature verification failed&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39 
+DC0E3
+gpg: keyring `/root/.gnupg/secring.gpg' created
+gpg: requesting key D39DC0E3 from hkp server keys.gnupg.net
+gpg: /root/.gnupg/trustdb.gpg: trustdb created
+gpg: key D39DC0E3: public key &quot;Michal Papis (RVM signing) &amp;lt;mpapis@gmail.com&amp;gt;&quot; imported
+gpg: no ultimately trusted keys found
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+[root@Test ~]# echo $?
+0
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;再次rvm安装就成功了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# curl -L get.rvm.io | bash -s stable 
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+184   184  184   184    0     0    307      0 --:--:-- --:--:-- --:--:--   613
+184   184  184   184    0     0    307      0 --:--:-- --:--:-- --:--:--   613
+  0   184    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+100 22817  100 22817    0     0  11904      0  0:00:01  0:00:01 --:--:-- 68519
+Downloading https://github.com/wayneeseguin/rvm/archive/1.26.10.tar.gz
+Downloading https://github.com/wayneeseguin/rvm/releases/download/1.26.10/1.26.10.tar.gz.asc
+gpg: Signature made Tue 03 Feb 2015 12:09:00 AM CST using RSA key ID BF04FF17
+gpg: Good signature from &quot;Michal Papis (RVM signing) &amp;lt;mpapis@gmail.com&amp;gt;&quot;
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 409B 6B17 96C2 7546 2A17  0311 3804 BB82 D39D C0E3
+     Subkey fingerprint: 62C9 E5F4 DA30 0D94 AC36  166B E206 C29F BF04 FF17
+GPG verified '/usr/local/rvm/archives/rvm-1.26.10.tgz'
+
+Upgrading the RVM installation in /usr/local/rvm/
+Upgrade of RVM in /usr/local/rvm/ is complete.
+
+# Administrator,
+#
+#   Thank you for using RVM!
+#   We sincerely hope that RVM helps to make your life easier and more enjoyable!!!
+#
+# ~Wayne, Michal &amp;amp; team.
+
+In case of problems: http://rvm.io/help and https://twitter.com/rvm_io
+
+Upgrade Notes:
+
+  * No new notes to display.
+
+[root@Test ~]# echo $?
+0
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;切换一下环境，就可以看到rvm命令了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# su - 
+[root@Test ~]# rvm -v 
+rvm 1.26.10 (latest) by Wayne E. Seguin &amp;lt;wayneeseguin@gmail.com&amp;gt;, Michal Papis &amp;lt;mpapis@gmail.com&amp;gt; [https://rvm.io/]
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;3安装ruby&quot;&gt;3.安装ruby&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# rvm install 2.2.1
+Searching for binary rubies, this might take some time.
+Found remote file https://rvm_io.global.ssl.fastly.net/binaries/centos/6/x86_64/ruby-2.2.1.tar.bz2
+Checking requirements for centos.
+Installing requirements for centos.
+Installing required packages: libyaml-devel, autoconf, gcc-c++, readline-devel, zlib-devel, libffi-devel, openssl-devel, automake, libtool, bison, sqlite-devel................
+Requirements installation successful.
+...
+...
+No checksum for downloaded archive, recording checksum in user configuration.
+ruby-2.2.1 - #validate archive
+ruby-2.2.1 - #extract
+ruby-2.2.1 - #validate binary
+ruby-2.2.1 - #setup
+ruby-2.2.1 - #gemset created /usr/local/rvm/gems/ruby-2.2.1@global
+ruby-2.2.1 - #importing gemset /usr/local/rvm/gemsets/global.gems....................................
+ruby-2.2.1 - #generating global wrappers........
+ruby-2.2.1 - #gemset created /usr/local/rvm/gems/ruby-2.2.1
+ruby-2.2.1 - #importing gemsetfile /usr/local/rvm/gemsets/default.gems evaluated to empty gem list
+ruby-2.2.1 - #generating default wrappers........
+[root@Test ~]# ruby -v 
+ruby 2.2.1p85 (2015-02-26 revision 49769) [x86_64-linux]
+[root@Test ~]#
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;有点慢, 整个过程花费了6分钟左右&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;安装好ruby，gem也跟着安装上去了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# gem -v 
+2.4.6
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;4安装jekyll&quot;&gt;4.安装jekyll&lt;/h3&gt;
+
+&lt;h4 id=&quot;2号坑&quot;&gt;2号坑&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# gem install jekyll
+^CERROR:  Interrupted
+[root@Test ~]# 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;为什么我会去中断，原因是等太久了，具体多少时间没统计，反正超出了我的忍耐&lt;/p&gt;
+
+&lt;p&gt;原因是我使用的安装源太远&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# gem sources -l 
+*** CURRENT SOURCES ***
+
+https://rubygems.org/
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;IP Address : 54.186.104.15 - 1 other site is hosted on this server&lt;/p&gt;
+
+&lt;p&gt;IP Location : Oregon - Portland - Amazon.com Inc.&lt;/p&gt;
+
+&lt;p&gt;解决办法是替换安装源地址&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]# gem sources -a https://ruby.taobao.org/
+https://ruby.taobao.org/ added to sources
+[root@Test ~]# gem sources -l 
+*** CURRENT SOURCES ***
+
+https://rubygems.org/
+https://ruby.taobao.org/
+[root@Test ~]# gem sources --remove https://rubygems.org/
+https://rubygems.org/ removed from sources
+[root@Test ~]# gem sources -l 
+*** CURRENT SOURCES ***
+
+https://ruby.taobao.org/
+[root@Test ~]# 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;再次安装jekyll,这回我使用time统计了一下共花费了2分半钟左右&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test ~]#  time gem install jekyll
+Fetching: liquid-2.6.2.gem
+Fetching: liquid-2.6.2.gem ( 35%)
+Fetching: liquid-2.6.2.gem ( 70%)
+Fetching: liquid-2.6.2.gem (100%)
+Fetching: liquid-2.6.2.gem (100%)
+Successfully installed liquid-2.6.2
+...
+...
+Parsing documentation for jekyll-2.5.3
+Installing ri documentation for jekyll-2.5.3
+Done installing documentation for liquid, kramdown, mercenary, safe_yaml, colorator, yajl-ruby, posix-spawn, pygments.rb, redcarpet, blankslate, parslet, toml, jekyll-paginate, jekyll-gist, coffee-script-source, execjs, coffee-script, jekyll-coffeescript, sass, jekyll-sass-converter, hitimes, timers, celluloid, rb-fsevent, ffi, rb-inotify, listen, jekyll-watch, fast-stemmer, classifier-reborn, jekyll after 27 seconds
+31 gems installed
+
+real	2m21.194s
+user	0m46.456s
+sys	0m2.128s
+[root@Test ~]# echo $?
+0
+[root@Test ~]#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;5安装nodejs&quot;&gt;5.安装nodejs&lt;/h3&gt;
+
+&lt;p&gt;为什么要安装nodejs呢，因为jekyll要依赖它，不安装会报错，下面是我没安装，常试直接运行的结果&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test tmp]# jekyll  new myblog
+/usr/local/rvm/gems/ruby-2.2.1/gems/execjs-2.4.0/lib/execjs/runtimes.rb:45:in `autodetect': Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes. (ExecJS::RuntimeUnavailable)
+	from /usr/local/rvm/gems/ruby-2.2.1/gems/execjs-2.4.0/lib/execjs.rb:5:in `&amp;lt;module:ExecJS&amp;gt;'
+	from /usr/local/rvm/rubies/ruby-2.2.1/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from /usr/local/rvm/gems/ruby-2.2.1/gems/jekyll-2.5.3/bin/jekyll:6:in `&amp;lt;top (required)&amp;gt;'
+...
+...
+	from /usr/local/rvm/gems/ruby-2.2.1/bin/jekyll:23:in `load'
+	from /usr/local/rvm/gems/ruby-2.2.1/bin/jekyll:23:in `&amp;lt;main&amp;gt;'
+	from /usr/local/rvm/gems/ruby-2.2.1/bin/ruby_executable_hooks:15:in `eval'
+	from /usr/local/rvm/gems/ruby-2.2.1/bin/ruby_executable_hooks:15:in `&amp;lt;main&amp;gt;'
+[root@Test tmp]#  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;安装nodejs&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test tmp]#  yum -y install nodejs 
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Setting up Install Process
+Loading mirror speeds from cached hostfile
+ * base: mirrors.skyshe.cn
+ * epel: mirrors.zju.edu.cn
+ * extras: mirrors.zju.edu.cn
+ * updates: mirrors.zju.edu.cn
+Resolving Dependencies
+--&amp;gt; Running transaction check
+---&amp;gt; Package nodejs.x86_64 0:0.10.33-1.el6 will be installed
+--&amp;gt; Processing Dependency: v8(x86-64) &amp;lt; 1:3.15 for package: nodejs-0.10.33-1.el6.x86_64
+--&amp;gt; Processing Dependency: v8(x86-64) &amp;gt;= 1:3.14.5.7 for package: nodejs-0.10.33-1.el6.x86_64
+--&amp;gt; Processing Dependency: libv8.so.3()(64bit) for package: nodejs-0.10.33-1.el6.x86_64
+--&amp;gt; Processing Dependency: libuv.so.0.10()(64bit) for package: nodejs-0.10.33-1.el6.x86_64
+--&amp;gt; Processing Dependency: libhttp_parser.so.2()(64bit) for package: nodejs-0.10.33-1.el6.x86_64
+--&amp;gt; Processing Dependency: libcares19.so.2()(64bit) for package: nodejs-0.10.33-1.el6.x86_64
+--&amp;gt; Running transaction check
+---&amp;gt; Package c-ares19.x86_64 0:1.9.1-5.el6.3 will be installed
+---&amp;gt; Package http-parser.x86_64 0:2.0-4.20121128gitcd01361.el6 will be installed
+---&amp;gt; Package libuv.x86_64 1:0.10.29-1.el6 will be installed
+---&amp;gt; Package v8.x86_64 1:3.14.5.10-14.el6 will be installed
+--&amp;gt; Finished Dependency Resolution
+
+Dependencies Resolved
+
+==========================================================================================================
+ Package                Arch              Version                                   Repository       Size
+==========================================================================================================
+Installing:
+ nodejs                 x86_64            0.10.33-1.el6                             epel            500 k
+Installing for dependencies:
+ c-ares19               x86_64            1.9.1-5.el6.3                             epel             73 k
+ http-parser            x86_64            2.0-4.20121128gitcd01361.el6              epel             22 k
+ libuv                  x86_64            1:0.10.29-1.el6                           epel             56 k
+ v8                     x86_64            1:3.14.5.10-14.el6                        epel            3.0 M
+
+Transaction Summary
+==========================================================================================================
+Install       5 Package(s)
+
+Total download size: 3.7 M
+Installed size: 12 M
+...
+...
+  Verifying  : http-parser-2.0-4.20121128gitcd01361.el6.x86_64                                        1/5 
+
+  Verifying  : 1:v8-3.14.5.10-14.el6.x86_64                                                           2/5 
+
+  Verifying  : 1:libuv-0.10.29-1.el6.x86_64                                                           3/5 
+
+  Verifying  : c-ares19-1.9.1-5.el6.3.x86_64                                                          4/5 
+
+  Verifying  : nodejs-0.10.33-1.el6.x86_64                                                            5/5 
+
+Installed:
+  nodejs.x86_64 0:0.10.33-1.el6                                                                           
+
+Dependency Installed:
+  c-ares19.x86_64 0:1.9.1-5.el6.3            http-parser.x86_64 0:2.0-4.20121128gitcd01361.el6           
+  libuv.x86_64 1:0.10.29-1.el6               v8.x86_64 1:3.14.5.10-14.el6                                
+
+Complete!
+[root@Test tmp]#
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;6生成blog&quot;&gt;6.生成blog&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test tmp]# jekyll  new myblog
+New jekyll site installed in /root/tmp/myblog. 
+[root@Test tmp]# 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;7运行jekyll-server&quot;&gt;7.运行jekyll server&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@Test tmp]# cd myblog/
+[root@Test myblog]# jekyll  server
+Configuration file: /root/tmp/myblog/_config.yml
+            Source: /root/tmp/myblog
+       Destination: /root/tmp/myblog/_site
+      Generating... 
+                    done.
+ Auto-regeneration: enabled for '/root/tmp/myblog'
+Configuration file: /root/tmp/myblog/_config.yml
+    Server address: http://127.0.0.1:4000/
+  Server running... press ctrl-c to stop.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;于是使用firefox打开 http://127.0.0.1:4000/ 就会显现&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/wilmosfang/blog/gh-pages/images/install_jekyll/jekyll_install.png&quot; alt=&quot;jekyll_init_page&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;下面这个是将我的blog clone到本地后的运行效果&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/wilmosfang/blog/gh-pages/images/install_jekyll/myblog_local_page.png&quot; alt=&quot;jekyll_init_page&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;感觉棒棒哒！！&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1.安装gcc&lt;/li&gt;
+  &lt;li&gt;2.安装rvm&lt;/li&gt;
+  &lt;li&gt;3.安装ruby&lt;/li&gt;
+  &lt;li&gt;4.安装jekyll&lt;/li&gt;
+  &lt;li&gt;5.安装nodejs&lt;/li&gt;
+  &lt;li&gt;6.生成blog&lt;/li&gt;
+  &lt;li&gt;7.运行jekyll server&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;命令汇总&quot;&gt;命令汇总&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;lsb_release  -a&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat /etc/issue&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;uname -a&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;yum -y install gcc&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ruby -v&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;yum -y install rubygems ruby-devel rubygems-devel&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem install jekyll&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;curl -L get.rvm.io | bash -s stable&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rvm -v&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rvm install 2.2.1&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ruby -v&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem -v&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem install jekyll&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem sources -a https://ruby.taobao.org/&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem sources --remove https://rubygems.org/&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem sources -l&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;time gem install jekyll&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;yum -y install nodejs&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll  new myblog&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll  server&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;注意&quot;&gt;注意&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1.尽量使用rvm,这是一款ruby神器&lt;/li&gt;
+  &lt;li&gt;2.使用合适的安装源,别让自己的青春虚度&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Fri, 16 Jun 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/06/16/install-rvm-ruby-jekyll/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/06/16/install-rvm-ruby-jekyll/</guid>
+        
+        <category>rvm</category>
+        
+        <category>ruby</category>
+        
+        <category>jekyll</category>
+        
+        <category>nodejs</category>
+        
+        
+        <category>jekyll</category>
+        
+      </item>
+    
+      <item>
+        <title>21分钟搭建一个GitHub Blog</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;喜欢写Blog的人，会经历三个阶段。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。&lt;/li&gt;
+  &lt;li&gt;第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。&lt;/li&gt;
+  &lt;li&gt;第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;现在就根据我在网上收集到的资料，直接帮你进入第三个阶段&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;概要&quot;&gt;概要&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#前言&quot; id=&quot;markdown-toc-前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#概要&quot; id=&quot;markdown-toc-概要&quot;&gt;概要&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#申请创建一个github帐号&quot; id=&quot;markdown-toc-申请创建一个github帐号&quot;&gt;申请创建一个github帐号&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#fork出一个现有的blog&quot; id=&quot;markdown-toc-fork出一个现有的blog&quot;&gt;fork出一个现有的Blog&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#定制化blog&quot; id=&quot;markdown-toc-定制化blog&quot;&gt;定制化Blog&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#添加新博文&quot; id=&quot;markdown-toc-添加新博文&quot;&gt;添加新博文&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;申请创建一个github帐号&quot;&gt;申请创建一个github帐号&lt;/h2&gt;
+
+&lt;p&gt;21世纪的公民都应该具备一项基本技能，那就是申请帐号&lt;/p&gt;
+
+&lt;p&gt;细节我就不详叙了，这是github的地址：
+&lt;a href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;GitHub是个好东西，自由且免费，还有一个所有穷屌丝爱死的特性，没容量上限，不要玩坏了哦！！&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;fork出一个现有的blog&quot;&gt;fork出一个现有的Blog&lt;/h2&gt;
+
+&lt;p&gt;如何最快地获得成果？&lt;/p&gt;
+
+&lt;p&gt;那就是‘剽窃’别人的胜利果实&lt;/p&gt;
+
+&lt;p&gt;当然也可以高尚一点叫作‘分享’，更何况被剽窃者相当乐意与你一起分享呢^_^&lt;/p&gt;
+
+&lt;p&gt;有一种哲学叫作：不要去重复发明轮子！&lt;/p&gt;
+
+&lt;p&gt;有个项目叫：&lt;a href=&quot;https://github.com/minixalpha/StrayBirds/tree/gh-pages&quot;&gt;StrayBirds&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;进入后，右上角有一个fork，点击fork出一份代码到自己的github中&lt;/p&gt;
+
+&lt;p&gt;访问http://${your-github-account}.github.io/StrayBirds/&lt;/p&gt;
+
+&lt;p&gt;其中${your-github-account}要替换成自己注册的github帐号&lt;/p&gt;
+
+&lt;p&gt;有没有成就感？你已经花费不到21分钟完成了这一原来看似艰巨的任务&lt;/p&gt;
+
+&lt;p&gt;其实此刻你已经拥有了一个完全属于自己的Blog&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;定制化blog&quot;&gt;定制化Blog&lt;/h2&gt;
+
+&lt;p&gt;虽然已经拥有了一个属于自己的Blog，但是看起来还是像是别人的，接下来进行定制化，让它看起来是自己的&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1.将_config.yml 中的 username 修改为你的用户名 minixbeta (此处应该是你自己的账户名)&lt;/li&gt;
+  &lt;li&gt;2.将_config.yml 中的 baseurl 修改为 /blog (或者其它任何你认为炫酷的名字)&lt;/li&gt;
+  &lt;li&gt;3.将_config.yml 中的 title 修改为 我的博客 (或者其它任何你认为逼格的title)&lt;/li&gt;
+  &lt;li&gt;4.在项目的 Setting 中将 Repository name 从 StrayBirds 修改为 blog&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由于整个Blog网站的源码都在你手上，你可做更多更深入的修改与定制&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;添加新博文&quot;&gt;添加新博文&lt;/h2&gt;
+
+&lt;p&gt;在 &lt;code class=&quot;highlighter-rouge&quot;&gt;_post&lt;/code&gt; 目录下添加形如 &lt;code class=&quot;highlighter-rouge&quot;&gt;2015-03-01-title.md&lt;/code&gt; 的文章，用 markdown 格式&lt;/p&gt;
+
+&lt;p&gt;markdown是一个有待驯服的小野兽，好待它实在是很简单&lt;/p&gt;
+
+&lt;p&gt;告诉你一个快速学习的方法：&lt;/p&gt;
+
+&lt;p&gt;两个窗口打开同一个demo，一边是效果，一边是源码，盯着看十分钟，你就懂了！！&lt;/p&gt;
+
+&lt;p&gt;撰写博客&lt;/p&gt;
+
+&lt;p&gt;你可以记下任何自己觉得值得与人分享的东西&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 16 Jun 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/06/16/build-a-githubblog-in-21minutes/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/06/16/build-a-githubblog-in-21minutes/</guid>
+        
+        <category>git</category>
+        
+        <category>jekyll</category>
+        
+        
+        <category>git</category>
+        
+      </item>
+    
+  </channel>
+</rss>
