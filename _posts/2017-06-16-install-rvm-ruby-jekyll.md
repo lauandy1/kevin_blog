@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 安装jekyll (include rvm,ruby,gem)
-author: kevin
+author: andy
 tags:  rvm ruby jekyll nodejs 
 categories:  jekyll
 wc: 568 1728 19846

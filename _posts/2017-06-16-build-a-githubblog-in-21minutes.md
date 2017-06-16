@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 21分钟搭建一个GitHub Blog
-author: wilmosfang
+author: andy
 tags:  git jekyll 
 categories:  git
 wc: 101 116 2872
