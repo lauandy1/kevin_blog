@@ -1,21 +1,17 @@
 ---
-layout: page
-title: Music
-permalink: /music/
+layout: default
+title: Photo
+permalink: /photo/
 icon: play 
 ---
 
-* content
-{:toc}
-
-
-> **一段流淌的旋律，缓缓的流入你的心**
-
-## 享受这静谧的时刻
+<img src="/images/family/thumb_IMG_2087_1024.jpg" width="200">
+<img src="/images/family/thumb_IMG_2153_1024.jpg" width="200">
+<img src="/images/family/thumb_IMG_2151_1024.jpg" width="200">
+<img src="/images/family/thumb_IMG_2183_1024.jpg" width="200">
 
 ---
 
- [夜空中最亮的星](https://y.qq.com/n/yqq/song/001NmPTG1fVsUw.html)
 
 
 
