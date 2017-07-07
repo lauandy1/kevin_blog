@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Photo
-permalink: /photo/
+title: Family
+permalink: /family/
 icon: play 
 ---
 
