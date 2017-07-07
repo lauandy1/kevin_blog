@@ -6,7 +6,7 @@ tags:  rvm ruby jekyll nodejs
 categories:  jekyll
 wc: 568 1728 19846
 excerpt: 系统环境准备，安装gcc，安装rvm，安装ruby，安装jekyll，安装nodejs，生成blog，运行jekyll server
-comments: true
+comments: false
 ---
 
 

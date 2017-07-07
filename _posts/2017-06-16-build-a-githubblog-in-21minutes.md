@@ -6,7 +6,7 @@ tags:  git jekyll
 categories:  git
 wc: 101 116 2872
 excerpt: 申请 github 账号，fork 出一个blog ，定制 blog , 添加新博文
-comments: true
+comments: false
 ---
 
 ## 前言
