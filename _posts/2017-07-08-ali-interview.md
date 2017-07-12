@@ -2,7 +2,7 @@
 layout: post
 title: 阿里信息事业部面试总结
 author: andy
-tags:  interview 
+tags:  interview redis jvm spring
 categories:  interview
 excerpt: 阿里信息事业部面试总结
 ---
