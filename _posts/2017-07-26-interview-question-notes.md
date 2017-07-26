@@ -39,3 +39,27 @@ excerpt: 面试知识点总结
 ### redis部署方式
 ### redis队列
 ### redis
+
+# nosql
+## mongodb
+
+# RPC
+## dubbo
+## thrift
+
+# 分布式
+## 分布式锁
+## 一致性哈希
+## 分布式事物
+
+# 负载均衡
+## nginx
+
+# MQ
+## RabbitMQ
+## Kafka
+
+# 搜索引擎
+## elasticsearch
+## solar
+
