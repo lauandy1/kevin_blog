@@ -13,10 +13,23 @@ excerpt: 面试知识点总结
 # Java基础
 ## 并发
 ## 集合类
+## NIO
+
+# Java网络编程
+## socket
+## select,poll,epoll
 
 # Jvm
 ## 垃圾回收机制
 ## 类加载
+
+# Java脚本语言
+
+# 协议
+## TCP协议
+### TCP三次握手和四次握手
+## HTTP协议
+## WebSocket协议
 
 # 框架
 ## spring
@@ -52,6 +65,7 @@ excerpt: 面试知识点总结
 ## 分布式锁
 ## 一致性哈希
 ## 分布式事物
+## zookeeper
 
 # 负载均衡
 ## nginx
