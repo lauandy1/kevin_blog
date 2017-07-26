@@ -38,7 +38,8 @@ excerpt: 面试知识点总结
 ### redis数据类型
 ### redis部署方式
 ### redis队列
-### redis
+### redis键删除策略
+### redis主从复制策略
 
 # nosql
 ## mongodb
