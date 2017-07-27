@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java多线程
+title: Java多线程基本原理
 author: andy
 tags:  java concurrent
 categories:  java concurrent
