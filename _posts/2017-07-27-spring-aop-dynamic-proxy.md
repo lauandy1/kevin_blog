@@ -2,8 +2,8 @@
 layout: post
 title: spring aop动态代理
 author: andy
-tags:  java
-categories:  java
+tags:  aop
+categories:  spring
 excerpt: spring aop动态代理原理
 ---
 
