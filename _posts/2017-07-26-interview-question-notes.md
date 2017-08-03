@@ -16,13 +16,15 @@ excerpt: 面试知识点总结
 ### 二分查找
 
 # Java基础
+## jdk动态代理
+### [jdk动态代理介绍](/2017/07/27/jdk-dynamic-proxy)
 ## 并发
 ### [jdk并发包介绍](/2017/07/17/jdk-concurrent-overview)
 ### [ConcurrentHashMap](/2017/07/27/ConcurrentHashMap)
 
 
 ## 集合类
-### [ArrayList](/2017/07/27/ArrayList)
+### [ArrayList](/2017/07/27/ArrayListp)
 ## NIO
 
 # Java网络编程
@@ -45,11 +47,14 @@ excerpt: 面试知识点总结
 ## spring
 ### spring加载bean
 ### spring事物
-### spring aop原理
+### spring aop
+#### [spring aop原理](/2017/07/27/spring-aop-dynamic-proxy)
 
 ## springmvc
 
 ## mybatis
+### [mybatis缓存机制](/2017/07/28/mybatis-cache)
+
 
 # 数据库
 ## mysql
