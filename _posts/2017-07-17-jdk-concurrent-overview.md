@@ -27,9 +27,11 @@ release方法，释放锁
 
 ## CountdownLatch
 闭锁，确保一个服务不会开始，直到它依赖的其他服务都已近开始，它允许一个或多个线程，等待一个事件集的发生。 通过减计数的方式，控制多个线程同时开始某个动作。当计数为0时，await后的代码才会被执行。 提供await（）和countDown（）两个方法。
+通常是阻塞主线程，然后其余的多个线程执行countDown方法，其余线程全部执行完毕后，count为0，这个时候主线程阻塞打开继续执行。因此，可以做诸如异步任务的总耗时等功能。
 
 ## CyclicBarrier
 cyclicBarrier中的await方法会对count值减1，并阻塞当前线程（java.util.concurrent.locks.Condition.await()），如果count==0时先执行CyclicBarrier内部的Runnable任务（java.lang.Runnable.run()），然后唤醒所有阻塞的线程（java.util.concurrent.locks.Condition.signalAll()），count恢复初始值（可以进入下一轮循环）。
+栅栏，是阻塞多个线程，多个线程都会执行await()方法，await方法会对计数减一，当所有线程都执行了await方法后，所有线程同时阻塞放开。因此，可以作为多任务处理完毕的集合点，再继续做后续的事情。
 
 与CountdownLatch不同的是，它可以循环重用。
 
