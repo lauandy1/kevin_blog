@@ -81,6 +81,7 @@ logstash-filebeat-es-simple.conf文件配置如下：
 重点是filter部分配置，处理正则匹配的消息，从中提取出关键字行成新的消息格式。并且新的消息格式和elasticsearch模板格式是对应的。
 第二端消息处理，是为了获得接口执行时间数据。其中还处理了类型转换，将timeCost转换为int值。
 再看output部分，也很关键。index定义了索引的index模式。template_name指定了elasticsearch中的模板名字，并且需要把模板提前在elastsearch中初始化。
+stdout配置可以输出到控制台，调试日志格式。
 
 ## elasticsearch配置
 bc_template.json配置如下：
@@ -121,5 +122,33 @@ bc_template.json配置如下：
 
 *需要注意的是，在Logstash中配置的index名称和bc_template.json中配置的template名称必须要匹配才行。
 否则不生效，无法在elasticsearch中生成索引数据。
+还有，需要配置一下timeCost属性。
+index:not_analyzed表示字段不支持模糊匹配。
+
+### elasticsearch命令
+#### 查看es所有index
+
+	curl http://localhost:9200/_cat/indices?v --user admin:sradmin
+#### 按照index名称查看es某个index内容
+
+	curl localhost:9200/business-2017.12.11/_search --user admin:sradmin
+#### 按照index名称删除es某个index内容
+
+	curl -XDELETE http://localhost:9200/business* --user admin:sradmin
+#### 按照index名称查看es某个index的mapping
+
+	curl -XGET "http://localhost:9200/filebeat-2017.12.07/_mapping?pretty" -uadmin
+#### 查看es所有模板
+
+	curl -XGET "http://localhost:9200/_template" --user admin:sradmin
+#### 查看es某个模板
+
+	curl -XGET "http://localhost:9200/_template/business" --user admin:sradmin
+#### 按照名称删除es模板
+
+	curl -XDELETE localhost:9200/_template/business --user admin:sradmin
+#### 添加模板
+
+	curl -XPUT http://localhost:9200/_template/business -d @bc_template.json --user admin:sradmin
 
 
