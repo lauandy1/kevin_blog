@@ -34,3 +34,53 @@ ELK三大组件中，Logstash可以被替换，可以通过任何其他方式把
 	processors:
 	 - drop_fields:
 	     fields: ["offset","input_type","beat"]
+
+注意输出到Logstash的配置。输出到控制台是用于调试，可以看到收集到的日志。
+
+## logstash配置
+logstash.yml文件内容没有任何改动。
+logstash-filebeat-es-simple.conf文件配置如下：
+	input {
+	  beats {
+	    port => 5044
+	  }
+	}
+	filter {
+	  if [message] =~ ".+gateway_common_log+.+" {
+	    dissect {
+	      mapping => {
+	        "message" => "%{ts} %{+ts} %{pre} %{+pre} %{+pre} - %{+pre},%{clientType}|%{clientIp}|%{userId}|%{userAgent}|%{requestId}|%{requestUri}"
+	      }
+	    }
+	  }
+	  if [message] =~ ".+gateway_time_cost_log+.+" {
+	    dissect {
+	      mapping => {
+	        "message" => "%{ts} %{+ts} %{pre} %{+pre} %{+pre} - %{+pre},%{apiPath}|%{timeCost}|%{requestId}"
+	      }
+	      convert_datatype => {
+	        "timeCost" => "int"
+	      }
+	    }
+	  }
+	}
+	output {
+	   elasticsearch {
+	    hosts => ["10.109.3.171:9200","10.109.3.172:9200","10.109.3.173:9200"]
+	    user => "admin"
+	    password => "sradmin-1122"
+	    index => "business-%{+YYYY.MM.dd}"
+	    manage_template => false
+	    template_name => "business"
+	    template_overwrite => true
+	  }
+	  stdout { codec => rubydebug }
+	}
+
+重点是filter部分配置，处理正则匹配的消息，从中提取出关键字行成新的消息格式。并且新的消息格式和elasticsearch模板格式是对应的。
+第二端消息处理，是为了获得接口执行时间数据。其中还处理了类型转换，将timeCost转换为int值。
+再看output部分，也很关键。index定义了索引的index模式。template_name指定了elasticsearch中的模板名字，并且需要把模板提前在elastsearch中初始化。
+
+## elasticsearch配置
+
+
