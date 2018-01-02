@@ -20,3 +20,17 @@ Logstash功能强大，但是比较占用资源。因此，一般是通过filebe
 ELK三大组件中，Logstash可以被替换，可以通过任何其他方式把日志写入到elasticsearch中进行存储。
 
 # ELK关键配置
+
+## filebeat配置
+	output.logstash:
+	  # The Logstash hosts
+	  hosts: ["10.109.3.181:5044","10.109.3.182:5044"]
+	  loadbalance: true
+	output.console:
+	  # Boolean flag to enable or disable the output module.
+	  enabled: true
+	  # Pretty print json event
+	  pretty: true
+	processors:
+	 - drop_fields:
+	     fields: ["offset","input_type","beat"]
