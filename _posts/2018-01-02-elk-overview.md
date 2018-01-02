@@ -129,24 +129,31 @@ index:not_analyzed表示字段不支持模糊匹配。
 #### 查看es所有index
 
 	curl http://localhost:9200/_cat/indices?v --user admin:sradmin
+
 #### 按照index名称查看es某个index内容
 
 	curl localhost:9200/business-2017.12.11/_search --user admin:sradmin
+
 #### 按照index名称删除es某个index内容
 
 	curl -XDELETE http://localhost:9200/business* --user admin:sradmin
+
 #### 按照index名称查看es某个index的mapping
 
 	curl -XGET "http://localhost:9200/filebeat-2017.12.07/_mapping?pretty" -uadmin
+
 #### 查看es所有模板
 
 	curl -XGET "http://localhost:9200/_template" --user admin:sradmin
+
 #### 查看es某个模板
 
 	curl -XGET "http://localhost:9200/_template/business" --user admin:sradmin
+
 #### 按照名称删除es模板
 
 	curl -XDELETE localhost:9200/_template/business --user admin:sradmin
+
 #### 添加模板
 
 	curl -XPUT http://localhost:9200/_template/business -d @bc_template.json --user admin:sradmin
