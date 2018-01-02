@@ -109,13 +109,17 @@ bc_template.json配置如下：
 	                "@timestamp" : { "type" : "date"},
 	                "@version" : { "type" : "integer", "index" : "not_analyzed" },
 	                "path" : { "type" : "string", "index" : "not_analyzed" },
-	                        "host" : { "type" : "string", "index" : "not_analyzed" },
-	                                "timeCost": {"type": "integer", "index" : "not_analyzed"}
+	                "host" : { "type" : "string", "index" : "not_analyzed" },
+	                "timeCost": {"type": "integer", "index" : "not_analyzed"}
 	            }
 	        }
 	    }
 	}
 
-这里
+这个模板文件需要提前初始化到elasticsearch中，使用如下命令：
+	curl -XPUT http://localhost:9200/_template/business -d @bc_template.json --user admin:sradmin
+
+*需要注意的是，在Logstash中配置的index名称和bc_template.json中配置的template名称必须要匹配才行。
+否则不生效，无法在elasticsearch中生成索引数据。
 
 
