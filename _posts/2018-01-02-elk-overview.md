@@ -40,6 +40,7 @@ ELK三大组件中，Logstash可以被替换，可以通过任何其他方式把
 ## logstash配置
 logstash.yml文件内容没有任何改动。
 logstash-filebeat-es-simple.conf文件配置如下：
+
 	input {
 	  beats {
 	    port => 5044
@@ -82,5 +83,39 @@ logstash-filebeat-es-simple.conf文件配置如下：
 再看output部分，也很关键。index定义了索引的index模式。template_name指定了elasticsearch中的模板名字，并且需要把模板提前在elastsearch中初始化。
 
 ## elasticsearch配置
+bc_template.json配置如下：
+
+	{
+	    "template" : "business-*",
+	    "order":1,
+	    "settings" : { "index.refresh_interval" : "60s" },
+	    "mappings" : {
+	        "_default_" : {
+	            "_all" : { "enabled" : false },
+	            "dynamic_templates" : [{
+	              "message_field" : {
+	                "match" : "message",
+	                "match_mapping_type" : "string",
+	                "mapping" : { "type" : "string"}
+	              }
+	            }, {
+	              "string_fields" : {
+	                "match" : "*",
+	                "match_mapping_type" : "string",
+	                "mapping" : { "type" : "string", "index" : "not_analyzed" }
+	              }
+	            }],
+	            "properties" : {
+	                "@timestamp" : { "type" : "date"},
+	                "@version" : { "type" : "integer", "index" : "not_analyzed" },
+	                "path" : { "type" : "string", "index" : "not_analyzed" },
+	                        "host" : { "type" : "string", "index" : "not_analyzed" },
+	                                "timeCost": {"type": "integer", "index" : "not_analyzed"}
+	            }
+	        }
+	    }
+	}
+
+这里
 
 
