@@ -27,5 +27,6 @@ rsa_id权限必须为600。
 
 # 参考
 1、https://askubuntu.com/questions/7477/how-can-i-add-a-new-user-as-sudoer-using-the-command-line
+
 2、https://blog.csdn.net/levy_cui/article/details/59524158
 
