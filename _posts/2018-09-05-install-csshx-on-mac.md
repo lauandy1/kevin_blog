@@ -27,13 +27,10 @@ brew install csshx
 # 配置csshx
 在用户目录下创建文件.csshrc，编辑类似如下的集群。
 
- clusters=sr-prod sr-emr sr-new
- 
- sr-prod=r1 r2 r3 r4 r5 r6 r7 r8 r9 r10
- 
- sr-emr=e1 e2 e3 e4 e5 e6 e7 e8 e9 e10 e11 e12
- 
- sr-new=r11 r12 r13
+    clusters=sr-prod sr-emr sr-new
+    sr-prod=r1 r2 r3 r4 r5 r6 r7 r8 r9 r10
+    sr-emr=e1 e2 e3 e4 e5 e6 e7 e8 e9 e10 e11 e12
+    sr-new=r11 r12 r13
 
 # 执行csshx命令打开多窗口控制台
 csshX cluster_name
